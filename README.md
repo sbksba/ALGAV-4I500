@@ -9,9 +9,6 @@ Participant
 Fichiers inclus
 ---------------
 
-> include/BRDtree.h    
->     Structures de données du projet   
-
 > src/BRDtree.c et include/BRDtree.h   
 >     Fonctions et structures de données pour un arbre de la Briandais   
 
