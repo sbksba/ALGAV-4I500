@@ -193,7 +193,7 @@ int main()
   else
     printf(FAILED);
 
-  /* test del word */
+  /* test merge word */
   printf("\n-- TEST MERGE TREE --\n");
   BRDtree *t3 = mergeBRDtree(t1,t2);
   int cptT3 = countWordsBRDtree(t3);
@@ -217,8 +217,26 @@ int main()
   /* test files */
   printf("\n-- TEST ADD FILE --\n");
   BRDtree *tfile = emptyBRDtree(); 
-  tfile = addDirToBRDtree("test",tfile);
-    
+  printf("add file\n");
+  tfile = addFileToBRDtree("test/dactylo",tfile);
+  printf("add dir\n");
+  tfile = addDirToBRDtree("test/shakespeare",tfile);
+  
+  int cfile = countWordsBRDtree(tfile);
+  printf("+NB WORDS [%d]     ",cfile);
+  if (cfile == 23106) printf(OK);
+  else printf(FAILED);
+
+  printf("\ndel file\n");
+  tfile = delFileToBRDtree("test/dactylo",tfile);
+  printf("del dir\n");
+  tfile = delDirToBRDtree("test/shakespeare",tfile);
+  
+  cfile = countWordsBRDtree(tfile);
+  printf("+NB WORDS [%d]         ",cfile);
+  if (cfile == 0) printf(OK);
+  else printf(FAILED);
+
   /* test free tree */
   printf("\n-- TEST FREE TREE --\n");
   cpt1=0;cpt2=0;

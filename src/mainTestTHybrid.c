@@ -118,9 +118,15 @@ int main()
   /* test del word */
   printf("\n-- TEST DEL WORD --\n");
   ct1 = countWordsTHybrid(t1);
+  #ifdef VERBOSE
+  printf("BEFORE [%d]\n",ct1);
+  #endif
   t1 = delTHybrid("a",t1);
+  #ifdef VERBOSE
+  printf("AFTER  [%d]\n",countWordsTHybrid(t1));
+  #endif
   printf("T1 DEL word 'a'       ");
-  if ((ct1-1) ==  countWordsTHybrid(t1))
+  if (4 ==  countWordsTHybrid(t1))
     printf(OK);
   else
     printf(FAILED);
@@ -131,6 +137,33 @@ int main()
   brd = THybridToBRDtree(t1);
   l = listWordsBRDtree(brd);
   printBRDtree(brd);
+
+  /* test files */
+  printf("\n-- TEST ADD FILE --\n");
+  THybrid *tfile = NULL; 
+  printf("add file\n");
+  tfile = addFileToTHybrid("test/dactylo",tfile);
+  printf("add dir\n");
+  tfile = addDirToTHybrid("test/shakespeare",tfile);
+  
+  int cfile = countWordsTHybrid(tfile);
+  printf("+NB WORDS [%d]     ",cfile);
+  if (cfile == 23106) printf(OK);
+  else printf(FAILED);
+
+  tfile = delTHybrid("a",tfile);
+
+  printf("del file\n");
+  tfile = delFileToTHybrid("test/dactylo",tfile);
+  printf("del dir\n");
+  tfile = delDirToTHybrid("test/shakespeare",tfile);
+
+  tfile = delTHybrid("a",tfile);
+
+  cfile = countWordsTHybrid(tfile);
+  printf("+NB WORDS [%d]         ",cfile);
+  if (cfile == 0) printf(OK);
+  else printf(FAILED);
 
   /* test free tree */
   printf("\n-- TEST FREE TREE --\n");
