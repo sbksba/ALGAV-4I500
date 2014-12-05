@@ -79,7 +79,7 @@ PLOTBRIANDAIS: ${LIB}/libalgav.a ${OBJ}/plotBRDtree.o
 PLOTHYBRID: ${LIB}/libalgav.a ${OBJ}/plotTHybrid.o
 	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
 
-.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYB plot
+.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR plot
 
 proper:
 	rm -f ${INC}/*~ ${SRC}/*~ ${LOG}/*~ *~
@@ -112,7 +112,10 @@ runPLOTBRDFIL:
 runPLOTBRDDIR:
 	@./$(BIN)/PLOTBRIANDAIS D test/shakespeare > log/briandais.dat
 
-runPLOTHYB:
-	@./$(BIN)/PLOTHYBRID test/dactylo > log/hybrid.dat
+runPLOTHYBFIL:
+	@./$(BIN)/PLOTHYBRID F test/dactylo > log/hybrid.dat
 
-plot: runPLOTBRDFIL runPLOTHYB
+runPLOTHYBDIR:
+	@./$(BIN)/PLOTHYBRID D test/shakespeare > log/hybrid.dat
+
+plot: runPLOTBRDFIL runPLOTHYBFIL
