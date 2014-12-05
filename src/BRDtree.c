@@ -381,9 +381,10 @@ BRDtree *addFileToBRDtree(char *file, BRDtree *tree)
 /* Add files of the directory dir to the Briandais tree */
 BRDtree *addDirToBRDtree(char *dir, BRDtree *tree)
 {
-  #ifdef DEBUG
-  dbg;
+  #ifdef VERBOSE
+  fprintf(stderr,"\n-- ADD DIR BRDTREE --\n");
   #endif
+ 
   DIR *d = opendir(dir);
   struct dirent *entry;
   char path [256];
@@ -441,6 +442,10 @@ BRDtree *delFileToBRDtree(char *file, BRDtree *tree)
 /* Delete the words in the Briandais tree of files of the directory */
 BRDtree *delDirToBRDtree(char *dir, BRDtree *tree)
 {
+  #ifdef VERBOSE
+  fprintf(stderr,"\n-- DEL DIR BRDTREE --\n");
+  #endif
+  
   DIR *d = opendir(dir);
   struct dirent *in;
   char path[256];

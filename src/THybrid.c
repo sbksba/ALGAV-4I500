@@ -387,9 +387,10 @@ THybrid *addFileToTHybrid(char *file, THybrid *trie)
 /* Add files of the directory dir to the hybrid trie */
 THybrid *addDirToTHybrid(char *dir, THybrid *trie)
 {
-  #ifdef DEBUG
-  dbg;
+  #ifdef VERBOSE
+  fprintf(stderr,"\n-- ADD DIR THYBRIDE --\n");
   #endif
+
   DIR *d = opendir(dir);
   struct dirent *entry;
   char path [256];
@@ -451,6 +452,10 @@ THybrid *delDirToTHybrid(char *dir, THybrid *trie)
   struct dirent *in;
   char path[256];
   
+  #ifdef VERBOSE
+  fprintf(stderr,"\n-- DEL DIR THYBRIDE --\n");
+  #endif
+
   if (dir == NULL)
     {
       fprintf(stderr,"opendir failed\n");
