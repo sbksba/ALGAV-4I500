@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <dirent.h>
 
 #include "THybrid.h"
 #include "BRDtree.h"
@@ -82,9 +84,6 @@ int countWordsTHybrid(THybrid *Trie)
     return 0;
   else 
     {
-      #ifdef VERBOSE
-      printf("val [%c]\n",Trie->val);
-      #endif
       if(Trie->val == EMPTY)
 	return countWordsTHybrid(Trie->eq) 
 	  + countWordsTHybrid(Trie->inf) 
@@ -379,6 +378,93 @@ THybrid *addFileToTHybrid(char *file, THybrid *trie)
       for(i = 0; i < 128; i++) buffer[i] = '\0';
     }
   fclose(f);
-  fprintf(stderr,"+[ADD] %s\n", file);
+  #ifdef VERBOSE
+  fprintf(stderr,"+[Add] %s\n", file);
+  #endif
+  return trie;
+}
+
+/* Add files of the directory dir to the hybrid trie */
+THybrid *addDirToTHybrid(char *dir, THybrid *trie)
+{
+  #ifdef DEBUG
+  dbg;
+  #endif
+  DIR *d = opendir(dir);
+  struct dirent *entry;
+  char path [256];
+  if(d == NULL)
+    {
+      fprintf(stderr,"opendir failed\n");
+      return NULL;
+    }
+  
+  while((entry = readdir(d)))
+    {
+      if(!strcmp(entry->d_name, "."))
+	continue;
+      if(!strcmp(entry->d_name, ".."))
+	continue;
+  
+      strcpy(path, dir);
+      strcat(path, "/");
+      strcat(path, entry->d_name);
+      trie = addFileToTHybrid(path, trie);
+  }
+  
+  closedir(d);
+  return trie;
+}
+
+/* Delete the words in the hybrid trie of the File file */
+THybrid *delFileToTHybrid(char *file, THybrid *trie)
+{
+  FILE *f;
+  char *buffer;
+  int i;
+  
+  f = fopen(file,"r");
+  if (f == NULL)
+    {
+      fprintf(stderr,"fopen failed\n");return NULL;
+    }
+  
+  buffer = malloc(sizeof(char) * 128);
+  for (i=0; i<128; i++) buffer[i] = '\0';
+  while (fscanf(f, "%s", buffer) != EOF)
+    {
+      trie = delTHybrid(buffer, trie);
+      for (i=0; i<128; i++) buffer[i] = '\0';
+    }
+
+  fclose(f);
+  #ifdef VERBOSE
+  fprintf(stderr,"+[Del] %s\n",file);
+  #endif
+  return trie;
+}
+
+/* Delete the words in the hybrid trie of files of the directory */
+THybrid *delDirToTHybrid(char *dir, THybrid *trie)
+{
+  DIR *d = opendir(dir);
+  struct dirent *in;
+  char path[256];
+  
+  if (dir == NULL)
+    {
+      fprintf(stderr,"opendir failed\n");
+      return NULL;
+    }
+
+  while ( (in = readdir(d)) )
+    {
+      if (!strcmp(in->d_name, ".")) continue;
+      if (!strcmp(in->d_name, "..")) continue;
+      sprintf(path, "%s/%s", dir, in->d_name);
+      trie = delFileToTHybrid(path,trie);
+    }
+
+  closedir(d);
   return trie;
 }

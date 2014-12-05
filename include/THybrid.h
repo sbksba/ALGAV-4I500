@@ -107,4 +107,13 @@ void plotTHybrid(THybrid *Trie);
 /* Add the file to the hybrid trie */
 THybrid *addFileToTHybrid(char *file, THybrid *trie);
 
+/* Add files of the directory dir to the hybrid trie */
+THybrid *addDirToTHybrid(char *dir, THybrid *trie);
+
+/* Delete the words in the hybrid trie of the File file */
+THybrid *delFileToTHybrid(char *file, THybrid *trie);
+
+/* Delete the words in the hybrid trie of files of the directory */
+THybrid *delDirToTHybrid(char *dir, THybrid *trie);
+
 #endif

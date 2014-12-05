@@ -118,5 +118,10 @@ BRDtree *addFileToBRDtree(char *file, BRDtree *tree);
 /* Add files of the directory dir to the Briandais tree */
 BRDtree *addDirToBRDtree(char *dir, BRDtree *tree);
 
+/* Delete the words in the Briandais tree of the File file */
+BRDtree *delFileToBRDtree(char *file, BRDtree *tree);
+
+/* Delete the words in the Briandais tree of files of the directory */
+BRDtree *delDirToBRDtree(char *dir, BRDtree *tree);
 
 #endif

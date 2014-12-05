@@ -353,24 +353,16 @@ void plotBRDtree(BRDtree *Tree)
 /* Add the file to the Briandais tree */
 BRDtree *addFileToBRDtree(char *file, BRDtree *tree)
 {
-  #ifdef DEBUG
-  dbg;
-  #endif
   FILE *f = fopen(file, "r");
   char *buffer;
   int i;
-  #ifdef DEBUG
-  dbg;
-  #endif
+  
   if(f == NULL)
     {
       fprintf(stderr,"fopen failed : %s\n", file);
       return NULL;
     }
   
-  #ifdef DEBUG
-  dbg;
-  #endif
   buffer = malloc(sizeof(char) * 128);
   for(i = 0; i < 128; i++) buffer[i] = '\0';
   while(fscanf(f,"%s", buffer) != EOF)
@@ -378,11 +370,11 @@ BRDtree *addFileToBRDtree(char *file, BRDtree *tree)
       tree = addBRDtree(buffer, tree);
       for(i = 0; i < 128; i++) buffer[i] = '\0';
     }
-  #ifdef DEBUG
-  dbg;
-  #endif
+  
   fclose(f);
+  #ifdef VERBOSE
   fprintf(stderr,"+[Add] %s\n",file);
+  #endif
   return tree;
 }
 
@@ -414,6 +406,59 @@ BRDtree *addDirToBRDtree(char *dir, BRDtree *tree)
       tree = addFileToBRDtree(path, tree);
   }
   
+  closedir(d);
+  return tree;
+}
+
+/* Delete the words in the Briandais tree of the File file */
+BRDtree *delFileToBRDtree(char *file, BRDtree *tree)
+{
+  FILE *f;
+  char *buffer;
+  int i;
+  
+  f = fopen(file,"r");
+  if (f == NULL)
+    {
+      fprintf(stderr,"fopen failed\n");return NULL;
+    }
+  
+  buffer = malloc(sizeof(char) * 128);
+  for (i=0; i<128; i++) buffer[i] = '\0';
+  while (fscanf(f, "%s", buffer) != EOF)
+    {
+      tree = delBRDtree(buffer, tree);
+      for (i=0; i<128; i++) buffer[i] = '\0';
+    }
+
+  fclose(f);
+  #ifdef VERBOSE
+  fprintf(stderr,"+[Del] %s\n",file);
+  #endif
+  return tree;
+}
+
+/* Delete the words in the Briandais tree of files of the directory */
+BRDtree *delDirToBRDtree(char *dir, BRDtree *tree)
+{
+  DIR *d = opendir(dir);
+  struct dirent *in;
+  char path[256];
+  
+  if (dir == NULL)
+    {
+      fprintf(stderr,"opendir failed\n");
+      return NULL;
+    }
+
+  while ( (in = readdir(d)) )
+    {
+      if (!strcmp(in->d_name, ".")) continue;
+      if (!strcmp(in->d_name, "..")) continue;
+      sprintf(path, "%s/%s", dir, in->d_name);
+      tree = delFileToBRDtree(path,tree);
+    }
+
   closedir(d);
   return tree;
 }
