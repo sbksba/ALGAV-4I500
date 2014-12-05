@@ -63,11 +63,14 @@ Directives de Makefile
 > runPLOTBRDDIR   
     Lance le programme d'affichage d'un graphique gnuplot sur le répertoire shakespeare   
 
-> runPLOTHYB   
+> runPLOTHYBFIL   
     Lance le programme d'affichage d'un graphique gnuplot sur le fichier dactylo   
 
+> runPLOTHYBDIR   
+    Lance le programme d'affichage d'un graphique gnuplot sur le répertoire shakespeare   
+
 > plot   
-    Lance runPLOTBRDFIL et runPLOTHYB   
+    Lance runPLOTBRDFIL et runPLOTHYBFIL   
 
 Etat d'avancement
 -----------------
