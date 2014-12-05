@@ -12,12 +12,32 @@
 
 int main(int argc, char **argv)
 {
-  THybrid *t1 = NULL;
-  t1 = addFileToTHybrid("test/dactylo",t1);
+  THybrid *tfile = NULL;
+  
+  if (argc == 1)
+    tfile = addFileToTHybrid("test/dactylo",tfile);
+  else
+    {
+      if (strcmp(argv[1],"D")==0)
+	{
+	  if (argv[2]!=NULL)
+	    tfile = addDirToTHybrid(argv[2],tfile);
+	}
+      else if (strcmp(argv[1],"F")==0)
+	{
+	  if (argv[2]!=NULL)
+	    tfile = addFileToTHybrid(argv[2],tfile);
+	}
+      else
+	{
+	  printf("You need to specify the option !!!\n");
+	  return EXIT_FAILURE;
+	}
+    }
 
   /* test GNUPLOT */
-  plotTHybrid(t1);
-  freeTHybrid(t1);
+  plotTHybrid(tfile);
+  freeTHybrid(tfile);
 
   return EXIT_SUCCESS;
 }
