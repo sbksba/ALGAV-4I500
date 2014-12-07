@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-W -Wall
-LDFLAGS=-L $(LIB) -lalgav -lrt
+LDFLAGS=-L $(LIB) -lalgav -lrt -lpthread
 INCFLAGS=-I$(INC)
 BIN=bin
 LIB=lib
@@ -22,7 +22,7 @@ ifeq ($(GNUPLOT),1)
 CFLAGS += -DGNUPLOT
 endif
 
-all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID TIMEADD TIMEDEL
+all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID TIMEADD TIMEDEL THREAD
 
 directories: ${OBJ} ${BIN} ${LIB} ${DATA} ${IMG}
 
@@ -67,6 +67,9 @@ ${OBJ}/mainTimeAdd.o: ${SRC}/mainTimeAdd.c
 ${OBJ}/mainTimeDel.o: ${SRC}/mainTimeDel.c
 	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
 
+${OBJ}/mainThreadBRD.o: ${SRC}/mainThreadBRD.c
+	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
+
 # ============
 # BIBLIOTHEQUE
 # ============
@@ -94,13 +97,16 @@ TIMEADD: ${LIB}/libalgav.a ${OBJ}/mainTimeAdd.o
 TIMEDEL: ${LIB}/libalgav.a ${OBJ}/mainTimeDel.o
 	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
 
-.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR runTIMEADD runTIMEDEL plotF plotD timeAdd timeDel graph
+THREAD: ${LIB}/libalgav.a ${OBJ}/mainThreadBRD.o
+	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
+
+.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR runTIMEADD runTIMEDEL runTHREAD plotF plotD timeAdd timeDel graph
 
 proper:
 	rm -f ${INC}/*~ ${SRC}/*~ ${LOG}/*~ *~
 
 clean: proper
-	rm -f ${OBJ}/* ${BIN}/* ${LIB}/* ${LOG}/briandais.* ${LOG}/hybrid.* ${LOG}/timeAdd.* ${LOG}/timeDelBRD.*
+	rm -f ${OBJ}/* ${BIN}/* ${LIB}/* ${DATA}/* ${IMG}/*
 
 cleanall: clean
 	rm -rf ${OBJ} ${BIN} ${LIB} ${DATA} ${IMG}
@@ -138,6 +144,9 @@ runTIMEADD:
 
 runTIMEDEL:
 	@./$(BIN)/TIMEDEL > ${DATA}/timeDel.dat
+
+runTHREAD:
+	@./$(BIN)/THREAD
 
 plotF: runPLOTBRDFIL runPLOTHYBFIL
 plotD: runPLOTBRDDIR runPLOTHYBDIR
