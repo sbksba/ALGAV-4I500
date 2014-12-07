@@ -7,7 +7,8 @@ LIB=lib
 INC=include
 OBJ=obj
 SRC=src
-LOG=log
+DATA=data
+IMG=images
 
 ifeq ($(DEBUG),1)
 CFLAGS += -DDEBUG -g
@@ -23,7 +24,7 @@ endif
 
 all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID TIMEADD TIMEDEL
 
-directories: ${OBJ} ${BIN} ${LIB} ${LOG}
+directories: ${OBJ} ${BIN} ${LIB} ${DATA} ${IMG}
 
 ${OBJ}:
 	mkdir -p ${OBJ}
@@ -31,8 +32,10 @@ ${BIN}:
 	mkdir -p ${BIN}
 ${LIB}:
 	mkdir -p ${LIB}
-${LOG}:
-	mkdir -p ${LOG}
+${DATA}:
+	mkdir -p ${DATA}
+${IMG}:
+	mkdir -p ${IMG}
 
 # =====
 # OBJET
@@ -100,7 +103,7 @@ clean: proper
 	rm -f ${OBJ}/* ${BIN}/* ${LIB}/* ${LOG}/briandais.* ${LOG}/hybrid.* ${LOG}/timeAdd.* ${LOG}/timeDelBRD.*
 
 cleanall: clean
-	rm -rf ${OBJ} ${BIN} ${LIB}
+	rm -rf ${OBJ} ${BIN} ${LIB} ${DATA} ${IMG}
 
 runTESTBRD:
 	@echo "+++++++++"
@@ -119,22 +122,22 @@ runTESTHYB:
 	@echo
 
 runPLOTBRDFIL:
-	@./$(BIN)/PLOTBRIANDAIS F test/dactylo > log/briandais.dat
+	@./$(BIN)/PLOTBRIANDAIS F test/dactylo > ${DATA}/briandais.dat
 
 runPLOTBRDDIR:
-	@./$(BIN)/PLOTBRIANDAIS D test/shakespeare > log/briandais.dat
+	@./$(BIN)/PLOTBRIANDAIS D test/shakespeare > ${DATA}/briandais.dat
 
 runPLOTHYBFIL:
-	@./$(BIN)/PLOTHYBRID F test/dactylo > log/hybrid.dat
+	@./$(BIN)/PLOTHYBRID F test/dactylo > ${DATA}/hybrid.dat
 
 runPLOTHYBDIR:
-	@./$(BIN)/PLOTHYBRID D test/shakespeare > log/hybrid.dat
+	@./$(BIN)/PLOTHYBRID D test/shakespeare > ${DATA}/hybrid.dat
 
 runTIMEADD:
-	@./$(BIN)/TIMEADD > log/timeAdd.dat
+	@./$(BIN)/TIMEADD > ${DATA}/timeAdd.dat
 
 runTIMEDEL:
-	@./$(BIN)/TIMEDEL > log/timeDel.dat
+	@./$(BIN)/TIMEDEL > ${DATA}/timeDel.dat
 
 plotF: runPLOTBRDFIL runPLOTHYBFIL
 plotD: runPLOTBRDDIR runPLOTHYBDIR
