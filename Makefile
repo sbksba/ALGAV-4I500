@@ -152,5 +152,5 @@ plotF: runPLOTBRDFIL runPLOTHYBFIL
 plotD: runPLOTBRDDIR runPLOTHYBDIR
 timeAdd: runTIMEADD
 timeDel: runTIMEDEL
-graph: plotF timeAdd runTHREAD
+graph: plotF timeAdd timeDel runTHREAD
 	@./graph.sh

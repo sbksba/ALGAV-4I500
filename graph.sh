@@ -7,5 +7,7 @@ echo "Graph : hybrid.png "
 ./log/plot_trie.gp
 echo "Graph : timeAdd.png "
 ./log/plot_timeAdd.gp
+echo "Graph : timeDel.png "
+./log/plot_timeDel.gp
 echo "Graph : thread.png "
 ./log/plot_thread.pg

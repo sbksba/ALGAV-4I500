@@ -50,8 +50,8 @@ void timeAdd (char *path)
   totalHYB = (end_tHYB - start_tHYB)/TICK;
   
   fprintf(stderr,"+[%s]\n",path);
-  fprintf(stderr,"+[TIME]  user[%f] -- total[%f] (seconds)\n",timeBRD,totalBRD);
-  fprintf(stderr,"+[TIME]  user[%f] -- total[%f] (seconds)\n",timeHYB,totalHYB);
+  fprintf(stderr,"+[TIME]  BRD user[%f] -- total[%f] (seconds)\n",timeBRD,totalBRD);
+  fprintf(stderr,"+[TIME]  HYB user[%f] -- total[%f] (seconds)\n",timeHYB,totalHYB);
   printf("%d %f %f\n",countWordsBRDtree(tree),totalBRD,totalHYB);
 
   freeBRDtree(tree);
@@ -60,6 +60,7 @@ void timeAdd (char *path)
 
 int main()
 {
+  fprintf(stderr,"\n-- TIME ADD --\n");
   printf("#timeAddBRD.dat\n#NB_WORDS TIME\n");
   timeAdd("test");
   timeAdd("test/tmp1");
