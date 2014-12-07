@@ -250,36 +250,212 @@ fonction qui prend un mot en argument et qui le supprime de l'arbre \textbf{s'il
 \section*{Fonctions pour un trie hybride}\label{sec:name}
 \addcontentsline{toc}{section}{Fonctions pour un trie hybride}
 
-fonction de recherche d'un mot dans un dictionnaire : \textit{Recherche(arbre,mot) $\rightarrow$ bool\'een}.\textbf{\`a faire}
+fonction de recherche d'un mot dans un dictionnaire : \textit{Recherche(arbre,mot) $\rightarrow$ bool\'een}.
 \begin{verbatim}
+int searchTHybrid(char *word, THybrid *Trie)
+{
+  #ifdef VERBOSE
+  printf("WD [%c]\n",*word);
+  #endif
+  if (Trie == NULL) return FALSE;
+  else if (strcmp(word,"") == 0)
+    {
+      if (Trie->val == NOTEMPTY) return TRUE;
+      else                       return FALSE;
+    }
+  else
+    {
+      if (*word < Trie->key)      return searchTHybrid(word, Trie->inf);
+      else if (*word > Trie->key) return searchTHybrid(word, Trie->sup);
+      else                        return searchTHybrid(++word, Trie->eq);
+    }
+}
 \end{verbatim}
 
-fonction qui compte les mots pr\'esents dans le dictionnaire : \textit{ComptageMots(arbre) $\rightarrow$ entier}.\textbf{\`a faire}
+fonction qui compte les mots pr\'esents dans le dictionnaire : \textit{ComptageMots(arbre) $\rightarrow$ entier}.
 \begin{verbatim}
+int countWordsTHybrid(THybrid *Trie)
+{
+  if(Trie == NULL)
+    return 0;
+  else 
+    {
+      if(Trie->val == EMPTY)
+	return countWordsTHybrid(Trie->eq) 
+	  + countWordsTHybrid(Trie->inf) 
+	  + countWordsTHybrid(Trie->sup);
+      else
+	return 1 + countWordsTHybrid(Trie->eq) 
+	  + countWordsTHybrid(Trie->inf) 
+	  + countWordsTHybrid(Trie->sup);
+    }
+}
 \end{verbatim}
 
-fonction qui liste les mots du dictionnaire dans l'ordre alphab\'etique : \textit{ListeMots(arbre) $\rightarrow$ liste[mots]}.\textbf{\`a faire}
+fonction qui liste les mots du dictionnaire dans l'ordre alphab\'etique : \textit{ListeMots(arbre) $\rightarrow$ liste[mots]}.
 \begin{verbatim}
+void insideListWordsTHybrid(THybrid *Trie, wordList **list, char *word)
+{
+  if (Trie == NULL) return;
+  int size=strlen(word),i;
+  char *nw = (char *)malloc(sizeof(char)*(size+1));
+
+  for (i=0; i<size; i++)
+    nw[i] = word[i];
+  nw[i] = Trie->key;
+
+  if (Trie->val == NOTEMPTY)
+    addWordList(nw, list);
+
+  insideListWordsTHybrid(Trie->eq, list, nw);
+  insideListWordsTHybrid(Trie->inf, list, nw);
+  insideListWordsTHybrid(Trie->sup, list, nw);
+}
+
+wordList *listWordsTHybrid(THybrid *Trie)
+{
+  wordList *list = (wordList *) malloc(sizeof(wordList));
+  list->next = NULL;
+  insideListWordsTHybrid(Trie, &list, "");
+  return list;
+}
 \end{verbatim}
 
-fonction qui compte les pointeurs vers NIL : \textit{ComptageNil(arbre) $\rightarrow$ entier}.\textbf{\`a faire}
+fonction qui compte les pointeurs vers NIL : \textit{ComptageNil(arbre) $\rightarrow$ entier}.
 \begin{verbatim}
+int countNullTHybrid(THybrid *Trie)
+{
+  if (Trie == NULL) return 1;
+  else
+    return  countNullTHybrid(Trie->eq)
+      + countNullTHybrid(Trie->inf)
+      + countNullTHybrid(Trie->sup);
+}
 \end{verbatim}
 
-fonction qui calcule la hauteur de l'arbre : \textit{Hauteur(arbre) $\rightarrow$ entier}.\textbf{\`a faire}
+fonction qui calcule la hauteur de l'arbre : \textit{Hauteur(arbre) $\rightarrow$ entier}.
 \begin{verbatim}
+int heightTHybrid(THybrid *Trie)
+{
+  if (Trie == NULL) return 0;
+  else
+    return 1 + maxOfThree(heightTHybrid(Trie->eq), heightTHybrid(Trie->inf), heightTHybrid(Trie->sup));
+}
 \end{verbatim}
 
-fonction qui calcule la profondeur moyenne des feuilles de l'arbre : \textit{ProfondeurMoyenne(arbre) $\rightarrow$ entier}.\textbf{\`a faire}
+fonction qui calcule la profondeur moyenne des feuilles de l'arbre : \textit{ProfondeurMoyenne(arbre) $\rightarrow$ entier}.
 \begin{verbatim}
+void insideAverageTHybrid(THybrid *Trie, int *level, int *count, int currLevel)
+{
+  if(Trie == NULL) return;
+  (*level) += currLevel;
+  (*count)++;
+  if(Trie->inf != NULL)
+    insideAverageTHybrid(Trie->inf, level, count, currLevel + 1);
+  if(Trie->eq != NULL)
+    insideAverageTHybrid(Trie->eq, level, count, currLevel + 1);
+  if(Trie->sup != NULL)
+    insideAverageTHybrid(Trie->sup, level, count, currLevel + 1);
+}
+
+double averageLevelTHybrid(THybrid *Trie)
+{
+  int level=0, count=0, currLevel=0;
+  insideAverageTHybrid(Trie, &level, &count, currLevel);
+  if (count == 0) return (double) 0;
+  return (double) level/count;
+}
 \end{verbatim}
 
-fonction qui prend un mot A en argument et qui indique de combien de mots du dictionnaire le mot A est le pr\'efixe : \textit{Prefixe(arbre,mot) $\rightarrow$ entier}.\textbf{\`a faire}
+fonction qui prend un mot A en argument et qui indique de combien de mots du dictionnaire le mot A est le pr\'efixe : \textit{Prefixe(arbre,mot) $\rightarrow$ entier}.
 \begin{verbatim}
+int countPrefixTHybrid(char *prefix, THybrid *Trie)
+{
+  if (strcmp(prefix,"") == 0)
+    {
+      return countWordsTHybrid(Trie);
+    }
+  if (*prefix < Trie->key)
+    {
+      return countPrefixTHybrid(prefix, Trie->inf);
+    }
+  else if (*prefix > Trie->key)
+    {
+      return countPrefixTHybrid(prefix, Trie->sup);
+    }
+  else
+    {
+      return countPrefixTHybrid(++prefix, Trie->eq);
+    }
+}
 \end{verbatim}
 
-fonction qui prend un mot en argument et qui le supprime de l'arbre \textbf{s'il y figure} : \textit{Suppression(arbre,mot) $\rightarrow$ arbre}.\textbf{\`a faire}
+fonction qui prend un mot en argument et qui le supprime de l'arbre \textbf{s'il y figure} : \textit{Suppression(arbre,mot) $\rightarrow$ arbre}.
 \begin{verbatim}
+THybrid *delTHybrid(char *word, THybrid *Trie)
+{
+  if(Trie == NULL)
+    return NULL;
+  else if(strcmp(word,"") == 0)
+    {
+      if(Trie->val == NOTEMPTY)
+	{
+	  if(Trie->eq != NULL)
+	    {
+	      Trie->val = EMPTY;
+	    }
+	  else if(Trie->inf != NULL)
+	    {
+	      Trie->val = EMPTY;
+	      Trie->eq = Trie->inf;
+	      Trie->inf = NULL;
+	    }
+	  else if(Trie->sup != NULL)
+	    {
+	      Trie->val = EMPTY;
+	      Trie->eq = Trie->sup;
+	      Trie->sup = NULL;
+	    }
+	  else
+	    {
+	      free(Trie);
+	      Trie = NULL;
+	    }
+	}
+      return Trie;
+    }
+  else
+    {
+      if(*word < Trie->key)
+	{
+	  Trie->inf = delTHybrid(word, Trie->inf);
+	}
+      else if(*word > Trie->key)
+	{
+	  Trie->sup = delTHybrid(word, Trie->sup);
+	}
+      else
+	{
+	  Trie->eq = delTHybrid(++word, Trie->eq);
+	}
+      if(Trie->inf == NULL && Trie->sup == NULL && Trie->eq == NULL)
+	{
+	  free(Trie);
+	  Trie = NULL;
+	}
+      else if(Trie->eq == NULL && Trie->inf != NULL)
+	{
+	  Trie->eq = Trie->inf;
+	  Trie->inf = NULL;
+	}
+      else if(Trie->eq == NULL && Trie->sup != NULL)
+	{
+	  Trie->eq = Trie->sup;
+	  Trie->sup = NULL;
+	}
+      return Trie;
+    }
+}
 \end{verbatim}
 
 \chapter{Fonctions complexes}
