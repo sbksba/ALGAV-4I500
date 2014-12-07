@@ -69,8 +69,20 @@ Directives de Makefile
 > runPLOTHYBDIR   
     Lance le programme d'affichage d'un graphique gnuplot sur le répertoire shakespeare   
 
-> plot   
+> plotF   
     Lance runPLOTBRDFIL et runPLOTHYBFIL   
+
+> plotD   
+    Lance runPLOTBRDFIL et runPLOTHYBFIL   
+
+> timeAdd   
+    Lance le programme pour tester l'ajout de mots   
+
+> timeDel   
+    Lance le programme pour tester la suppression de mots   
+
+> graph   
+    Creer tous les graphiques   
 
 Etat d'avancement
 -----------------
