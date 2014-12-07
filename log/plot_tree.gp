@@ -13,8 +13,8 @@ set terminal png medium size 1980,1020 enhanced font 'Verdana,10'
 set output "log/briandais.png"
 
 set style line 1 lc rgb 'black' lt 1 lw 2.5 pt 7 pi -1 ps 2.5
-set pointintervalbox 4 
+#set pointintervalbox 4 
 
 unset key; unset tics; unset border
 
-plot 'log/briandais.dat' using 2:3 with linespoints ls 1 notitle ,  'log/briandais.dat' using 2:3:1 with labels notitle tc rgb "white" offset 0
+plot 'log/briandais.dat' using 2:3 with linespoints ls 1 notitle , 'log/briandais.dat' using 2:3:1 with labels notitle tc rgb "white" offset 0

@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-W -Wall
-LDFLAGS=-L $(LIB) -lalgav
+LDFLAGS=-L $(LIB) -lalgav -lrt
 INCFLAGS=-I$(INC)
 BIN=bin
 LIB=lib
@@ -21,7 +21,7 @@ ifeq ($(GNUPLOT),1)
 CFLAGS += -DGNUPLOT
 endif
 
-all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID
+all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID TIMEADD TIMEDEL
 
 directories: ${OBJ} ${BIN} ${LIB} ${LOG}
 
@@ -58,6 +58,12 @@ ${OBJ}/plotBRDtree.o: ${SRC}/plotBRDtree.c
 ${OBJ}/plotTHybrid.o: ${SRC}/plotTHybrid.c
 	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
 
+${OBJ}/mainTimeAdd.o: ${SRC}/mainTimeAdd.c
+	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
+
+${OBJ}/mainTimeDel.o: ${SRC}/mainTimeDel.c
+	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
+
 # ============
 # BIBLIOTHEQUE
 # ============
@@ -79,13 +85,19 @@ PLOTBRIANDAIS: ${LIB}/libalgav.a ${OBJ}/plotBRDtree.o
 PLOTHYBRID: ${LIB}/libalgav.a ${OBJ}/plotTHybrid.o
 	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
 
-.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR plotF plotD
+TIMEADD: ${LIB}/libalgav.a ${OBJ}/mainTimeAdd.o
+	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
+
+TIMEDEL: ${LIB}/libalgav.a ${OBJ}/mainTimeDel.o
+	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
+
+.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR runTIMEADD runTIMEDEL plotF plotD timeAdd timeDel graph
 
 proper:
 	rm -f ${INC}/*~ ${SRC}/*~ ${LOG}/*~ *~
 
 clean: proper
-	rm -f ${OBJ}/* ${BIN}/* ${LIB}/* ${LOG}/briandais.* ${LOG}/hybrid.*
+	rm -f ${OBJ}/* ${BIN}/* ${LIB}/* ${LOG}/briandais.* ${LOG}/hybrid.* ${LOG}/timeAdd.* ${LOG}/timeDelBRD.*
 
 cleanall: clean
 	rm -rf ${OBJ} ${BIN} ${LIB}
@@ -118,5 +130,15 @@ runPLOTHYBFIL:
 runPLOTHYBDIR:
 	@./$(BIN)/PLOTHYBRID D test/shakespeare > log/hybrid.dat
 
+runTIMEADD:
+	@./$(BIN)/TIMEADD > log/timeAdd.dat
+
+runTIMEDEL:
+	@./$(BIN)/TIMEDEL > log/timeDel.dat
+
 plotF: runPLOTBRDFIL runPLOTHYBFIL
 plotD: runPLOTBRDDIR runPLOTHYBDIR
+timeAdd: runTIMEADD
+timeDel: runTIMEDEL
+graph: plotF timeAdd
+	@./graph.sh
