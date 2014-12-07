@@ -146,11 +146,11 @@ runTIMEDEL:
 	@./$(BIN)/TIMEDEL > ${DATA}/timeDel.dat
 
 runTHREAD:
-	@./$(BIN)/THREAD
+	@./$(BIN)/THREAD > ${DATA}/thread.dat
 
 plotF: runPLOTBRDFIL runPLOTHYBFIL
 plotD: runPLOTBRDDIR runPLOTHYBDIR
 timeAdd: runTIMEADD
 timeDel: runTIMEDEL
-graph: plotF timeAdd
+graph: plotF timeAdd runTHREAD
 	@./graph.sh

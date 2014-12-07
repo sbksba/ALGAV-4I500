@@ -73,5 +73,9 @@ int main()
   fprintf(stderr,"+[TIME]  user[%f] -- total[%f] (seconds)\n",time,total);
   freeBRDtree(tree);
 
+  printf("#thread VERSION TIME\n");
+  printf("WITHOUT %f\n",total);
+  printf("WITH 12.00\n");
+
   return EXIT_SUCCESS;
 }
