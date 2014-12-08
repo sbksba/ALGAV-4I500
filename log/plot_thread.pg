@@ -7,8 +7,8 @@ set style fill solid 1.00 border -1
 set style histogram rowstacked
 set style data histograms
 set xtics 1.0
-set mytics 1.0
-set ytics 1.0
+set mytics 0.5
+set ytics 0.5
 set yr [0.0:13.0]
 set ylabel "TIME"
 set xlabel "VERSION"

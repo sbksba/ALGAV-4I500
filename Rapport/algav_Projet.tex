@@ -7,6 +7,7 @@
 \usepackage[left=2cm]{geometry}
 \usepackage{amsmath,amssymb,mathrsfs}
 \usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
 
 %Utilisation des codes sources en C
 \usepackage{listings}
@@ -31,6 +32,9 @@
 \renewcommand{\contentsname}{Sommaire}
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STRUCTURES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Structures}
 \section*{Arbres de la Briandais}\label{sec:name}
 \addcontentsline{toc}{section}{Arbres de la Briandais}
@@ -96,6 +100,9 @@ Idem \`a la premi\`ere partie (arbre de la Briandais), nous allons construire un
 \medskip
 Pour avoir une image plus graphique de ce trie, veuillez voir la figure \ref{fig:Trie Hybride} page~\pageref{fig:Trie Hybride}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FONCTIONS AVANCEES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Fonctions avanc\'ees pour chacune des structures}
 
 \section*{Fonctions pour un arbre de la Briandais}\label{sec:name}
@@ -247,6 +254,7 @@ fonction qui prend un mot en argument et qui le supprime de l'arbre \textbf{s'il
   }
 \end{verbatim}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Fonctions pour un trie hybride}\label{sec:name}
 \addcontentsline{toc}{section}{Fonctions pour un trie hybride}
 
@@ -458,10 +466,88 @@ THybrid *delTHybrid(char *word, THybrid *Trie)
 }
 \end{verbatim}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FONCTIONS COMPLEXES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Fonctions complexes}
 
-\chapter{Complexit\'es}
+fonction qui prend deux arbres de la Briandais en argument et les fusionnent en un troisi\`eme : \textit{mergeBRDtree(arbre1,arbre2) $\rightarrow$ BRDtree}.
+\begin{verbatim}
+BRDtree *mergeBRDtree(BRDtree *Tree1, BRDtree *Tree2)
+{
+  if(Tree1 == NULL) return Tree2;
+  if(Tree2 == NULL) return Tree1;
+  
+  if(Tree2->key < Tree1->key)
+    return newBRDtree(Tree2->key, Tree2->child, mergeBRDtree(Tree1, Tree2->next));
+  else if(Tree2->key > Tree1->key)
+    return newBRDtree(Tree1->key, Tree1->child, mergeBRDtree(Tree1->next, Tree2));
+  else
+    return newBRDtree(Tree1->key, mergeBRDtree(Tree1->child, Tree2->child),
+		                  mergeBRDtree(Tree1->next, Tree2->next));
+}
+\end{verbatim}
 
+fonction permettant de passer d'un trie hybride \`a un arbre de la Briandais : \textit{THybridToBRDtree (trie) $\rightarrow$ BRDtree}.
+\begin{verbatim}
+void tmpToBRDtree (THybrid *trie, BRDtree *tree, char *word)
+{
+  char *nw;
+  int size,i;
+  
+  if (trie == NULL){return;}
+ 
+  size = strlen(word);
+  nw = (char *)malloc(sizeof(char)*(size+1));
+  
+  for (i=0; i<size; i++)
+    nw[i] = word[i];
+  nw[i] = trie->key;
+  
+  if (trie->val == NOTEMPTY)
+    tree = addBRDtree(nw,tree);
+  
+  tmpToBRDtree(trie->eq, tree, nw);
+  tmpToBRDtree(trie->inf, tree, word);
+  tmpToBRDtree(trie->sup, tree, word);
+}
+
+BRDtree *THybridToBRDtree (THybrid *Trie)
+{
+  BRDtree *brd = emptyBRDtree();
+  tmpToBRDtree(Trie, brd, "");
+  return brd;
+}
+\end{verbatim}
+
+fonction permettant de passer d'un arbre de la Briandais \`a un trie hybrid: \textit{BRDtreeToTHybrid (arbre) $\rightarrow$ THybrid}.
+\begin{verbatim}
+\end{verbatim}
+
+fonction permettant de r\'equilibrer un trie hybrid: \textit{rebalancing (trie) $\rightarrow$ THybrid}.
+\begin{verbatim}
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMPLEXITES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Complexit\'es}
+\section*{Arbres de la Briandais}\label{sec:name}
+\section*{Tries Hybrides}\label{sec:name}
+\section*{R\'esum\'e}\label{sec:name}
+
+\begin{table}[h]
+\begin{tabular}{ccccccccc}
+                                                           & \cellcolor[HTML]{C0C0C0}search & \cellcolor[HTML]{C0C0C0}count words & \cellcolor[HTML]{C0C0C0}list words & \cellcolor[HTML]{C0C0C0}count Nil & \cellcolor[HTML]{C0C0C0}height & \cellcolor[HTML]{C0C0C0}average depth & \cellcolor[HTML]{C0C0C0}prefix & \cellcolor[HTML]{C0C0C0}delete word \\
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Briandais}   & \cellcolor[HTML]{EFEFEF}L      &                                     & \cellcolor[HTML]{EFEFEF}           &                                   & \cellcolor[HTML]{EFEFEF}       &                                       & \cellcolor[HTML]{EFEFEF}       &                                     \\
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Hybrid Trie} & \cellcolor[HTML]{EFEFEF}L+ln N &                                     & \cellcolor[HTML]{EFEFEF}           &                                   & \cellcolor[HTML]{EFEFEF}       &                                       & \cellcolor[HTML]{EFEFEF}       &                                     \\
+                                                           &                                &                                     &                                    &                                   &      
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ANNEXES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Annexe}
 \section*{Structures de donn\'ees}\label{sec:name}
 \addcontentsline{toc}{section}{Structures de donn\'ees}
@@ -508,7 +594,7 @@ La structure de donn\'ees \textit{THybrid} est la structure d\'efinissant un tri
 \addcontentsline{toc}{section}{\listfigurename}
 \listoffigures
 \newpage
-\section*{Bibliographie}\label{sec:name}
-\addcontentsline{toc}{section}{Bibliographie}
+%\section*{Bibliographie}\label{sec:name}
+%\addcontentsline{toc}{section}{Bibliographie}
 
 \end{document}
