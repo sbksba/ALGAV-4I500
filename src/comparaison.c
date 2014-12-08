@@ -40,6 +40,8 @@ int main()
   start_tHYB = times(&startHYB);
   if (searchTHybrid("what",trie) == 0)
     fprintf(stderr,"HYB FIND WORD\n");
+  else
+    fprintf(stderr,"HYB NOT FIND WORD\n");
   end_tHYB = times(&endHYB);
 
   timeHYB = (double)(endHYB.tms_utime - startHYB.tms_utime)/TICK;
