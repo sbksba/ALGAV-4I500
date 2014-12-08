@@ -161,4 +161,4 @@ timeDel: runTIMEDEL
 graph: plotF timeAdd timeDel runTHREAD
 	@./graph.sh
 cmp:
-	@./$(BIN)/COMPARE
+	@./$(BIN)/COMPARE > ${DATA}/compare.dat
