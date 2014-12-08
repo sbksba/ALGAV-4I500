@@ -183,6 +183,6 @@ int main()
   printf("TTEST Free trie       ");
   if (cpt3 == 1) printf(OK);
   else printf(FAILED);
-
+  
   return EXIT_SUCCESS;
 }
