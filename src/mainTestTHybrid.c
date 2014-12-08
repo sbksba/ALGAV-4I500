@@ -32,16 +32,16 @@ int main()
   */
   
   printf("\n-- TEST SEARCH --\n");
-  if (searchTHybrid("at",t1) == TRUE) {printf("T1 : at FIND          ");printf(OK);}
+  if (searchTHybrid("at",t1) == 0) {printf("T1 : at FIND          ");printf(OK);}
   else {printf("T1 : at FIND          ");printf(FAILED);}
 
-  if (searchTHybrid("bonjour",t1) == TRUE) {printf("T1 : bonjour NOT FIND ");printf(FAILED);}
+  if (searchTHybrid("bonjour",t1) == 0) {printf("T1 : bonjour NOT FIND ");printf(FAILED);}
   else {printf("T1 : bonjour NOT FIND ");printf(OK);}
 
-  if (searchTHybrid("the",t1) == TRUE) {printf("T1 : the FIND         ");printf(OK);}
+  if (searchTHybrid("the",t1) == 0) {printf("T1 : the FIND         ");printf(OK);}
   else {printf("T1 : the FIND         ");printf(FAILED);}
 
-  if (searchTHybrid("a",t1) == TRUE) {printf("T1 : a FIND           ");printf(OK);}
+  if (searchTHybrid("a",t1) == 0) {printf("T1 : a FIND           ");printf(OK);}
   else {printf("T1 : a FIND           ");printf(FAILED);}
 
   /* test count word */

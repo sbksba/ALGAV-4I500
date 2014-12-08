@@ -227,6 +227,8 @@ int main()
   if (cfile == 23106) printf(OK);
   else printf(FAILED);
 
+  if (searchBRDtree("dactylo",tfile) == 0) printf("FIND\n");
+
   printf("\ndel file\n");
   tfile = delFileToBRDtree("test/dactylo",tfile);
   printf("del dir\n");
