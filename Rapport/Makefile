@@ -36,6 +36,7 @@ DVIPS = dvips
 PDF = pdflatex
 BIB = bibtex
 READPDF= evince
+DIAPO= presentation
 
 #*******************************************************************************
 # Error message
@@ -121,6 +122,14 @@ img: $(DOC).tex
 	@echo "***************************************************************************"
 	$(READPDF) $(DOC)/$(DOC).pdf
 
+dia:
+	@echo "***************************************************************************"
+	@echo "creation du fichier pdf avec des images"
+	@echo "***************************************************************************"
+	$(PDF) $(DIAPO).tex
+	$(PDF) $(DIAPO).tex
+	rm -f *.aux *.glo *.gls *.idx *.ilg *.ind *.lof *.log *.lot *.out *.toc *.nav *.snm
+
 final: $(DOC).tex
 	@echo "###########################################################################"
 	@echo "lancement de la compilation"
@@ -152,31 +161,12 @@ final: $(DOC).tex
 	@echo "affichage du pdf"
 	@echo "***************************************************************************"
 	$(READPDF) $(DOC)/$(DOC).pdf
+
 clean:
 	clear
 	@echo "***************************************************************************"
 	@echo "nettoyage complet"
 	@echo "***************************************************************************"
-	rm -f *~
-	rm -f *.aux
-	rm -f *.glo
-	rm -f *.gls
-	rm -f *.idx
-	rm -f *.ilg
-	rm -f *.ind
-	rm -f *.lof
-	rm -f *.log
-	rm -f *.lot
-	rm -f *.out
-	rm -f *.toc
-	rm -f $(DOC).haux
-	rm -f $(DOC).hind
-	rm -f $(DOC).htoc
-	rm -f $(DOC).image.tex
-	rm -f $(DOC).dvi
-	rm -f $(DOC)*.ps
-	rm -f $(DOC).pdf
-	rm -f $(DOC).b*
-	rm -f *.gif
-	rm -rf $(DOC)
-	rm -f $(DOC).pgf-plot.gnuplot
+	rm -f *~ *.aux *.glo *.gls *.idx *.ilg *.ind *.lof *.log *.lot *.out *.toc *.nav *.snm *.pdf
+	rm -f $(DOC).haux $(DOC).hind $(DOC).htoc $(DOC).image.tex $(DOC).dvi $(DOC)*.ps $(DOC).pdf $(DOC).b* *.gif
+	rm -rf $(DOC) $(DOC).pgf-plot.gnuplot
