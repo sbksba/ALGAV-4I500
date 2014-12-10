@@ -534,39 +534,71 @@ fonction permettant de r\'equilibrer un trie hybride: \textit{rebalancing (trie)
 \chapter{Complexit\'es}
 \section*{Arbres de la Briandais}\label{sec:name}
 
-fonction de recherche d'un mot dans un arbre de la Briandais, dans le pire cas on parcours L caract\`eres (L correspond \`a la longueur du mot) donc O(L).\\
-fonction de comptage de mots, on parcours tous l'arbre soit L caract\`eres et pour chaque L on parcours sa hauteur soit ln N donc O(L * ln N).\\
-fonction liste de mots, on parcours simplement l'arbre donc O(L * ln N).\\
-fonction de comptage des NULL, idem que comptage de mots.\\
-fonction de calcul de la hauteur, on parcours tous l'arbre donc environ O(log2 N).\\
-fonction de calcul de la profondeur moyenne de l'arbre, on parcours tous l'arbre donc O(L * ln N).\\
-fonction de comptage de prefix, cela est d\'etermin\'ee par la hauteur de l'arbre pour le prefix recherch\'e donc O(log2 N).\\
-fonction de suppression d'un mot dans l'arbre, cette fonction d\'epend aussi de la hauteur de l'arbre donc O(log2 N).\\
+\textit{fonction de recherche d'un mot dans un arbre de la Briandais}, dans le pire cas on parcours L caract\`eres (L correspond \`a la longueur du mot) donc notre complexit\'e est en O(L).\\
+
+\smallskip
+\textit{fonction de comptage de mots}, on parcours tous l'arbre (dans le pire et le meilleur cas) soit L caract\`eres et pour chaque L on parcours sa hauteur soit ln N donc notre complexit\'e est en O(L * ln N).\\
+
+\smallskip
+\textit{fonction liste de mots}, on parcours simplement tous l'arbre donc comme pour le comptage de mots nous avons une complexit\'e en O(L * ln N).\\
+
+\smallskip
+\textit{fonction de comptage des NULL}, idem que comptage de mots.\\
+
+\smallskip
+\textit{fonction de calcul de la hauteur}, on parcours tous l'arbre encore une fois donc notre complexit\'e s'exprime en O(L * log N).\\
+
+\smallskip
+\textit{fonction de calcul de la profondeur moyenne de l'arbre}, on parcours tous l'arbre donc comme pour les fonctions pr\'ec\'edentes on exprime notre complexit\'e en O(L * ln N).\\
+
+\smallskip
+\textit{fonction de comptage de prefix}, cela est d\'etermin\'ee par la hauteur de l'arbre pour le prefix recherch\'e donc nous avons une complexit\'e en O(L + ln N).\\
+
+\smallskip
+\textit{fonction de suppression d'un mot dans l'arbre}, cette fonction d\'epend aussi de la hauteur de l'arbre donc nous avons une complexit\'e en O(log2 N).\\
 
 \section*{Tries Hybrides}\label{sec:name}
 
-fonction de recherche d'un mot dans un trie hybride, dans le pire cas on parcours L caract\`eres (L correspond \`a la longueur du mot) plus sa haurteur donc O(L + ln N).\\
-fonction de comptage de mots, on parcours tous le trie soit L caract\`eres et pour chaque L on parcours sa hauteur soit ln N donc O(L * ln N).\\
-fonction liste de mots, on parcours simplement l'arbre donc O(L * ln N).\\
-fonction de comptage des NULL, idem que comptage de mots.\\
-fonction de calcul de la hauteur, on parcours tous l'arbre donc environ O(log2 N).\\
-fonction de calcul de la profondeur moyenne de l'arbre, on parcours tous l'arbre donc O(L * ln N).\\
-fonction de comptage de prefix, cela est d\'etermin\'ee par la hauteur de l'arbre pour le prefix recherch\'e donc O(log2 N).\\
-fonction de suppression d'un mot dans l'arbre, cette fonction d\'epend aussi de la hauteur de l'arbre donc O(log2 N).\\
+\textit{fonction de recherche d'un mot dans un trie hybride}, dans le pire cas on parcours L caract\`eres (L correspond \`a la longueur du mot) plus sa haurteur donc notre complexit\'e est en O(L + ln N).\\
 
+\smallskip
+\textit{fonction de comptage de mots}, on parcours tous le trie soit L caract\`eres et pour chaque L on parcours sa hauteur soit ln N donc notre complexit\'e est en O(L * ln N).\\
 
-The time complexity of the ternary search tree operations is similar to that of binary search tree. i.e. the insertion, deletion and search operations take time proportional to the height of the ternary search tree. The space is proportional to the length of the string to be stored.
+\smallskip
+\textit{fonction liste de mots}, on parcours simplement le trie donc notre complexit\'e est en O(L * ln N).\\
+
+\smallskip
+\textit{fonction de comptage des NULL}, idem que comptage de mots.\\
+
+\smallskip
+\textit{fonction de calcul de la hauteur}, on parcours tous le trie donc nous avons une complexit\'e exprim\'ee en O(L * log2 N).\\
+
+\smallskip
+\textit{fonction de calcul de la profondeur moyenne du trie}, on parcours tous le trie donc notre complexit\'e est en O(L * ln N).\\
+
+\smallskip
+\textit{fonction de comptage de prefix}, cela est d\'etermin\'ee par la hauteur de l'arbre pour le prefix recherch\'e donc notre complexit\'e est en O(L + ln N).\\
+
+\smallskip
+\textit{fonction de suppression d'un mot dans le trie}, cette fonction d\'epend aussi de la hauteur du trie donc notre complexit\'e est en O(log2 N).\\
+
+La complexit\'e en temps des op\'erations dans un arbre ternaire de recherche est similaire \`a celle d'un arbre binaire de recherche.\\
+C'est \`a dire les op\'erations d'insertion, de suppression et de recherche ont un temps proportionnelle \`a la hauteur de l'arbre ternaire de recherche.\\
+L'espace est proportionnelle à la longueur de la cha\^ine \`a m\'emoriser.
 
 \section*{R\'esum\'e}\label{sec:name}
 
 \begin{table}[h]
 \begin{tabular}{ccccccccc}
                                                            & \cellcolor[HTML]{C0C0C0}search & \cellcolor[HTML]{C0C0C0}count words & \cellcolor[HTML]{C0C0C0}list words & \cellcolor[HTML]{C0C0C0}count Nil & \cellcolor[HTML]{C0C0C0}height & \cellcolor[HTML]{C0C0C0}average depth & \cellcolor[HTML]{C0C0C0}prefix & \cellcolor[HTML]{C0C0C0}delete word \\
-\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Briandais}   & \cellcolor[HTML]{EFEFEF}L      &    L * ln N                                 & \cellcolor[HTML]{EFEFEF}L * ln N           & L * ln N                                  & \cellcolor[HTML]{EFEFEF} $\log_2 N$      &         L * ln N                              & \cellcolor[HTML]{EFEFEF}   $\log_2 N$    &      $\log_2 N$                               \\
-\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Hybrid Trie} & \cellcolor[HTML]{EFEFEF}L + ln N &      L * ln N                                & \cellcolor[HTML]{EFEFEF}     L * ln N       &     L * ln N                               & \cellcolor[HTML]{EFEFEF}    $\log_2 N$   &              L * ln N                         & \cellcolor[HTML]{EFEFEF}    $\log_2 N$   &     $\log_2 N$                                \\
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Briandais}   & \cellcolor[HTML]{EFEFEF}L      &    L * ln N                                 & \cellcolor[HTML]{EFEFEF}L * ln N           & L * ln N                                  & \cellcolor[HTML]{EFEFEF} L * ln N      &         L * ln N                              & \cellcolor[HTML]{EFEFEF}   L + ln N    &      $\log_2 N$                               \\
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Hybrid Trie} & \cellcolor[HTML]{EFEFEF}L + ln N &      L * ln N                                & \cellcolor[HTML]{EFEFEF}     L * ln N       &     L * ln N                               & \cellcolor[HTML]{EFEFEF}    L * ln N   &              L * ln N                         & \cellcolor[HTML]{EFEFEF}    L + ln N   &     $\log_2 N$                                \\
                                                            &                                &                                      &                                    &                                   &      
 \end{tabular}
 \end{table}
+
+\section*{Place m\'emoire}\label{sec:name}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ANNEXES
