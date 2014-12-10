@@ -520,11 +520,11 @@ BRDtree *THybridToBRDtree (THybrid *Trie)
 }
 \end{verbatim}
 
-fonction permettant de passer d'un arbre de la Briandais \`a un trie hybrid: \textit{BRDtreeToTHybrid (arbre) $\rightarrow$ THybrid}.
+fonction permettant de passer d'un arbre de la Briandais \`a un trie hybride: \textit{BRDtreeToTHybrid (arbre) $\rightarrow$ THybrid}.
 \begin{verbatim}
 \end{verbatim}
 
-fonction permettant de r\'equilibrer un trie hybrid: \textit{rebalancing (trie) $\rightarrow$ THybrid}.
+fonction permettant de r\'equilibrer un trie hybride: \textit{rebalancing (trie) $\rightarrow$ THybrid}.
 \begin{verbatim}
 \end{verbatim}
 
@@ -534,17 +534,37 @@ fonction permettant de r\'equilibrer un trie hybrid: \textit{rebalancing (trie) 
 \chapter{Complexit\'es}
 \section*{Arbres de la Briandais}\label{sec:name}
 
+fonction de recherche d'un mot dans un arbre de la Briandais, dans le pire cas on parcours L caract\`eres (L correspond \`a la longueur du mot) donc O(L).\\
+fonction de comptage de mots, on parcours tous l'arbre soit L caract\`eres et pour chaque L on parcours sa hauteur soit ln N donc O(L * ln N).\\
+fonction liste de mots, on parcours simplement l'arbre donc O(L * ln N).\\
+fonction de comptage des NULL, idem que comptage de mots.\\
+fonction de calcul de la hauteur, on parcours tous l'arbre donc environ O(log2 N).\\
+fonction de calcul de la profondeur moyenne de l'arbre, on parcours tous l'arbre donc O(L * ln N).\\
+fonction de comptage de prefix, cela est d\'etermin\'ee par la hauteur de l'arbre pour le prefix recherch\'e donc O(log2 N).\\
+fonction de suppression d'un mot dans l'arbre, cette fonction d\'epend aussi de la hauteur de l'arbre donc O(log2 N).\\
+
 \section*{Tries Hybrides}\label{sec:name}
- The time complexity of the ternary search tree operations is similar to that of binary search tree. i.e. the insertion, deletion and search operations take time proportional to the height of the ternary search tree. The space is proportional to the length of the string to be stored.
+
+fonction de recherche d'un mot dans un trie hybride, dans le pire cas on parcours L caract\`eres (L correspond \`a la longueur du mot) plus sa haurteur donc O(L + ln N).\\
+fonction de comptage de mots, on parcours tous le trie soit L caract\`eres et pour chaque L on parcours sa hauteur soit ln N donc O(L * ln N).\\
+fonction liste de mots, on parcours simplement l'arbre donc O(L * ln N).\\
+fonction de comptage des NULL, idem que comptage de mots.\\
+fonction de calcul de la hauteur, on parcours tous l'arbre donc environ O(log2 N).\\
+fonction de calcul de la profondeur moyenne de l'arbre, on parcours tous l'arbre donc O(L * ln N).\\
+fonction de comptage de prefix, cela est d\'etermin\'ee par la hauteur de l'arbre pour le prefix recherch\'e donc O(log2 N).\\
+fonction de suppression d'un mot dans l'arbre, cette fonction d\'epend aussi de la hauteur de l'arbre donc O(log2 N).\\
+
+
+The time complexity of the ternary search tree operations is similar to that of binary search tree. i.e. the insertion, deletion and search operations take time proportional to the height of the ternary search tree. The space is proportional to the length of the string to be stored.
 
 \section*{R\'esum\'e}\label{sec:name}
 
 \begin{table}[h]
 \begin{tabular}{ccccccccc}
                                                            & \cellcolor[HTML]{C0C0C0}search & \cellcolor[HTML]{C0C0C0}count words & \cellcolor[HTML]{C0C0C0}list words & \cellcolor[HTML]{C0C0C0}count Nil & \cellcolor[HTML]{C0C0C0}height & \cellcolor[HTML]{C0C0C0}average depth & \cellcolor[HTML]{C0C0C0}prefix & \cellcolor[HTML]{C0C0C0}delete word \\
-\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Briandais}   & \cellcolor[HTML]{EFEFEF}L      &                                     & \cellcolor[HTML]{EFEFEF}           &                                   & \cellcolor[HTML]{EFEFEF}       &                                       & \cellcolor[HTML]{EFEFEF}       &                                     \\
-\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Hybrid Trie} & \cellcolor[HTML]{EFEFEF}L+ln N &                                     & \cellcolor[HTML]{EFEFEF}           &                                   & \cellcolor[HTML]{EFEFEF}       &                                       & \cellcolor[HTML]{EFEFEF}       &                                     \\
-                                                           &                                &                                     &                                    &                                   &      
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Briandais}   & \cellcolor[HTML]{EFEFEF}L      &    L * ln N                                 & \cellcolor[HTML]{EFEFEF}L * ln N           & L * ln N                                  & \cellcolor[HTML]{EFEFEF} $\log_2 N$      &         L * ln N                              & \cellcolor[HTML]{EFEFEF}   $\log_2 N$    &      $\log_2 N$                               \\
+\cellcolor[HTML]{C0C0C0}{\color[HTML]{656565} Hybrid Trie} & \cellcolor[HTML]{EFEFEF}L + ln N &      L * ln N                                & \cellcolor[HTML]{EFEFEF}     L * ln N       &     L * ln N                               & \cellcolor[HTML]{EFEFEF}    $\log_2 N$   &              L * ln N                         & \cellcolor[HTML]{EFEFEF}    $\log_2 N$   &     $\log_2 N$                                \\
+                                                           &                                &                                      &                                    &                                   &      
 \end{tabular}
 \end{table}
 
