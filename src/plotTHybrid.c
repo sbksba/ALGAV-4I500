@@ -15,7 +15,7 @@ int main(int argc, char **argv)
   THybrid *tfile = NULL;
   
   if (argc == 1)
-    tfile = addFileToTHybrid("test/dactylo",tfile);
+    tfile = addFileToTHybrid("test/dactylo.txt",tfile);
   else
     {
       if (strcmp(argv[1],"D")==0)

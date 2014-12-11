@@ -294,20 +294,21 @@ int isBalancing (THybrid *trie)
     {
       if (trie->val == EMPTY)
 	return TRUE;
-      if (isBalancing(trie->eq) && isBalancing(trie->inf) && isBalancing(trie->sup) && fabs(heightTHybrid(trie->sup) - heightTHybrid(trie->inf)) )
+      if (isBalancing(trie->eq) && isBalancing(trie->inf) && isBalancing(trie->sup) && abs(heightTHybrid(trie->sup) - heightTHybrid(trie->inf)) )
 	return TRUE;
       else
 	return FALSE;
     }
 }
 
-void leftRotate (char n){ (void)n;}
+/*void leftRotate (char n){ (void)n;}
 void rightRotate (char n){(void)n;}
-void *rebalancing (THybrid *trie){}
+void *rebalancing (THybrid *trie){(void)trie;}
 THybrid *addTHybridRebalancing (THybrid *trie, char *word)
 {
+  (void)word;
   return trie;
-}
+  }*/
 
 /*
   =============================================

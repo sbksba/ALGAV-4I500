@@ -167,8 +167,10 @@ int main()
 
   /* test balancing*/
    printf("\n-- TEST BALANCING --\n");
-   if (isBalancing(t1) == TRUE) {printf("BALANCING         ");printf(FAILED);}
-   else {printf("NOT BALANCING         ");printf(OK);}
+   THybrid *tb = NULL;
+   tb = addFileToTHybrid("test/dactylo",tfile);
+   if (isBalancing(tb) == TRUE) {printf("BALANCING             ");printf(OK);}
+   else {printf("NOT BALANCING         ");printf(FAILED);}
 
   /* test free tree */
   printf("\n-- TEST FREE TREE --\n");
