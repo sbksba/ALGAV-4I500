@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-W -Wall
-LDFLAGS=-L $(LIB) -lalgav -lrt -lpthread
+LDFLAGS=-L $(LIB) -lalgav -lrt -lpthread -lm
 INCFLAGS=-I$(INC)
 BIN=bin
 LIB=lib

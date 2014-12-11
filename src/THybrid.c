@@ -255,6 +255,7 @@ THybrid *delTHybrid(char *word, THybrid *Trie)
   =============================================
 */
 
+/* Change a hybrid trie in a Briandais tree */
 void tmpToBRDtree (THybrid *trie, BRDtree *tree, char *word)
 {
   char *nw;
@@ -282,6 +283,30 @@ BRDtree *THybridToBRDtree (THybrid *Trie)
   BRDtree *brd = emptyBRDtree();
   tmpToBRDtree(Trie, brd, "");
   return brd;
+}
+
+/* Test if a hybrid trie is balanced */
+int isBalancing (THybrid *trie)
+{
+  if (trie == NULL)
+    return TRUE;
+  else
+    {
+      if (trie->val == EMPTY)
+	return TRUE;
+      if (isBalancing(trie->eq) && isBalancing(trie->inf) && isBalancing(trie->sup) && fabs(heightTHybrid(trie->sup) - heightTHybrid(trie->inf)) )
+	return TRUE;
+      else
+	return FALSE;
+    }
+}
+
+void leftRotate (char n){ (void)n;}
+void rightRotate (char n){(void)n;}
+void *rebalancing (THybrid *trie){}
+THybrid *addTHybridRebalancing (THybrid *trie, char *word)
+{
+  return trie;
 }
 
 /*

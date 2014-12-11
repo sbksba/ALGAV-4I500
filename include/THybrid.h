@@ -72,6 +72,15 @@ THybrid *delTHybrid(char *word, THybrid *Trie);
 void tmpToBRDtree (THybrid *trie, BRDtree *tree, char *word);
 BRDtree *THybridToBRDtree (THybrid *Trie);
 
+/* Test if a hybrid trie is balanced */
+int isBalancing (THybrid *trie);
+
+/* Rebalancing a Hybrid trie */
+void leftRotate (char n);
+void rightRotate (char n);
+void *rebalancing (THybrid *trie);
+THybrid *addTHybridRebalancing (THybrid *trie, char *word);
+
 /*
   =============================================
   Useful functions of a hybrid trie.

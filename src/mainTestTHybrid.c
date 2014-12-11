@@ -165,6 +165,11 @@ int main()
   if (cfile == 0) printf(OK);
   else printf(FAILED);
 
+  /* test balancing*/
+   printf("\n-- TEST BALANCING --\n");
+   if (isBalancing(t1) == TRUE) {printf("BALANCING         ");printf(FAILED);}
+   else {printf("NOT BALANCING         ");printf(OK);}
+
   /* test free tree */
   printf("\n-- TEST FREE TREE --\n");
   cpt1=0;int cpt2=0;int cpt3=0;
