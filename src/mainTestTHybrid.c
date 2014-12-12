@@ -168,7 +168,7 @@ int main()
   /* test balancing*/
    printf("\n-- TEST BALANCING --\n");
    THybrid *tb = NULL;
-   tb = addFileToTHybrid("test/dactylo",tfile);
+   tb = addFileToTHybrid("test/balance.txt",tfile);
    if (isBalancing(tb) == TRUE) {printf("BALANCING             ");printf(OK);}
    else {printf("NOT BALANCING         ");printf(FAILED);}
 

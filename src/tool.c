@@ -40,9 +40,15 @@ void addWordList(char *word, wordList **list)
 /* Print the list of word of the Briandais tree */
 void printWordsList(wordList *list)
 {
-  while (list != NULL)
+  /*
+    while (list != NULL)
     {
       printf("\t-%s\n",list->word);
       list=list->next;
     }
+  */
+  if (list == NULL)
+    return;
+  printWordsList(list->next);
+  printf("\t-%s\n",list->word);
 }
