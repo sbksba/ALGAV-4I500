@@ -88,9 +88,14 @@ Etat d'avancement
 -----------------
 
 > src/tool.c            - OK   
-> src/BRDtree.c         - NOT   
-> src/THybrid.c         - NOT   
+> src/BRDtree.c         - OK   
+> src/THybrid.c         - OK   
 > src/mainTestBRD.c     - OK   
 > src/mainTestTHybrid.c - OK   
 > src/plotBRDtree.c     - OK   
 > src/plotTHybrid.c     - OK   
+
+Graphiques
+----------
+
+Les graphiques de la presentation ont ete realises sur un vieux pc.
