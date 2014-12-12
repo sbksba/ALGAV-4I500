@@ -22,7 +22,7 @@ ifeq ($(GNUPLOT),1)
 CFLAGS += -DGNUPLOT
 endif
 
-all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID TIMEADD TIMEDEL THREAD COMPARE
+all: directories BRIANDAIS PLOTBRIANDAIS HYBRID PLOTHYBRID TIMEADD TIMEDEL THREAD COMPARE MAIN
 
 directories: ${OBJ} ${BIN} ${LIB} ${DATA} ${IMG}
 
@@ -73,6 +73,9 @@ ${OBJ}/mainThreadBRD.o: ${SRC}/mainThreadBRD.c
 ${OBJ}/comparaison.o: ${SRC}/comparaison.c
 	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
 
+${OBJ}/main.o: ${SRC}/main.c
+	${CC} -c -o $@ $< $(CFLAGS) ${INCFLAGS}
+
 # ============
 # BIBLIOTHEQUE
 # ============
@@ -106,7 +109,10 @@ THREAD: ${LIB}/libalgav.a ${OBJ}/mainThreadBRD.o
 COMPARE: ${LIB}/libalgav.a ${OBJ}/comparaison.o
 	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
 
-.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR runTIMEADD runTIMEDEL runTHREAD plotF plotD timeAdd timeDel graph cmp
+MAIN: ${LIB}/libalgav.a ${OBJ}/main.o
+	${CC} -o ${BIN}/$@ $^ ${LDFLAGS}
+
+.PHONY: all proper clean cleanall runTESTBRD runTESTHYB runPLOTBRDFIL runPLOTBRDDIR runPLOTHYBFIL runPLOTHYBDIR runTIMEADD runTIMEDEL runTHREAD plotF plotD timeAdd timeDel graph cmp main
 
 proper:
 	rm -f ${INC}/*~ ${SRC}/*~ ${LOG}/*~ *~
@@ -162,3 +168,5 @@ graph: plotF timeAdd timeDel runTHREAD
 	@./graph.sh
 cmp:
 	@./$(BIN)/COMPARE > ${DATA}/compare.dat
+main:
+	@./$(BIN)/MAIN
